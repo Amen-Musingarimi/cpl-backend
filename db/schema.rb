@@ -10,9 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_02_203106) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_065348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "league_admins", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_league_admins_on_user_id"
+  end
+
+  create_table "team_admins", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_team_admins_on_user_id"
+  end
+
+  create_table "team_members", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "team_admin_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_admin_id"], name: "index_team_members_on_team_admin_id"
+    t.index ["user_id"], name: "index_team_members_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -28,4 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_203106) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "league_admins", "users"
+  add_foreign_key "team_admins", "users"
+  add_foreign_key "team_members", "team_admins"
+  add_foreign_key "team_members", "users"
 end
