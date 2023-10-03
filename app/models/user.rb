@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  has_one :league_admin
+  has_one :team_admin
+  has_one :team_member
+  
   has_secure_password
 
   validates :email, presence: true, uniqueness: true
