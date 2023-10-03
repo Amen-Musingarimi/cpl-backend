@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invitation to CPL Snooker League App</title>
+</head>
+<body>
+  <h1>Welcome to CPL Snooker League!</h1>
+  <p>Hello <%= @user.name %>,</p>
+  <p>You have been invited to join the CPL Snooker League Management App as a <%= @user.role %> of Team <%= @user.team %>.</p>
+  <p>Please click the following link to confirm your invitation:</p>
+  <a href="<%= confirmation_url(@user.invitation_token) %>">Confirm Invitation</a>
+  <p>If you did not request this invitation, please ignore this email.</p>
+  <p>Best regards,<br>
+  The CPL Snooker League Team</p>
+</body>
+</html>

@@ -27,6 +27,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def confirm_invitation
+    @user = User.find_by(invitation_token: params[:token])
+
+    if @user && @user.update(confirmed: true)
+      render json: { message: 'User confirmed successfully. You can now log in.' }, status: :ok
+    else
+      render json: { errors: 'Invalid or expired invitation token.' }, status: :unprocessable_entity
+    end
+  end
+
     # PUT /users/{username}
     def update
       unless @user.update(user_params)
